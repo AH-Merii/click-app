@@ -1,6 +1,6 @@
 [project]
 name = "{{ cookiecutter.hyphenated }}"
-version = "0.1"
+dynamic = ["version"]
 description = "{{ cookiecutter.description or "" }}"
 readme = "README.md"
 authors = [{name = "{{ cookiecutter.author_name }}"}]
@@ -23,4 +23,33 @@ CI = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.hyph
 {{ cookiecutter.hyphenated }} = "{{ cookiecutter.underscored }}.cli:cli"
 
 [project.optional-dependencies]
-test = ["pytest"]
+test = ["isort", "black", "flake8", "pylint", "pytest", "pytest-cov"]
+dev = ["pip-tools"]
+release = ["python-semantic-release==9.4.0", "build"]
+
+[tool.setuptools]
+packages = ["{{ cookiecutter.underscored }}"]
+
+[tool.setuptools_scm]
+version_file = "{{ cookiecutter.underscored }}/_version.py"
+version_scheme = "no-guess-dev"
+
+[tool.semantic_release]
+version_variable = ["{{ cookiecutter.underscored }}/_version.py"]
+version_source = "tag"
+upload_to_pypi = false
+patch_without_tag = true
+major_on_zero = true
+branch = "main"
+
+[tool.flake8]
+max-line-length = 120
+exclude = [".venv"]
+
+[tool.pylint]
+message.disable = "C0103,R0902,R0913,E1102"
+format.max-line-length = 120
+
+[tool.black]
+line-length = 120
+

@@ -49,7 +49,7 @@ test-pylint:	## Check pylint is OK or fails
 .PHONY: test-pytest
 test-pytest:	## Run tests with pytest
 	# Run coverage only on the unit tests
-	pytest --cov=serverless_llm_voice_transcription tests/unit
+	pytest --cov={{ cookiecutter.underscored }} tests
 
 	# Then run tests without coverage
 	pytest

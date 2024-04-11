@@ -1,28 +1,90 @@
-name: Test
+name: Python Package CI
 
-on: [push, pull_request]
+on: [push]
 
-permissions:
-  contents: read
 {% raw %}
 jobs:
-  test:
+  test-pytest:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-        cache: pip
-        cache-dependency-path: pyproject.toml
-    - name: Install dependencies
-      run: |
-        pip install '.[test]'
-    - name: Run tests
-      run: |
-        pytest
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          lfs: true
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install package dependencies from the requirements.txt file so they are cached by Github Actions
+        run: pip install -r requirements.txt
+
+      - name: Install the package and it's dependencies for testing
+        run: make install-test
+
+      - name: Run all the pytest tests
+        run: make test-pytest
+
+  test-formatting-linting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install package dependencies from the requirements.txt file so they are cached by Github Actions
+        run: pip install -r requirements.txt
+
+      - name: Install the package and it's dependencies for testing
+        run: make install-test
+
+      - name: Test that Python import statements are correctly ordered and formatted
+        run: make test-isort
+
+      - name: Check that Black formatting is correct, fails if not
+        run: make test-black
+
+      - name: Test that flake8 linter is passing, fails if not
+        run: make test-flake8
+
+      - name: Test that pylint linter is passing, fails if not
+        run: make test-pylint
+
+  release:
+    needs: [test-pytest, test-formatting-linting]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # configure ssh key with github for use in 'publish release' step
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
+          lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Setup dependencies for doing a release
+        run: pip install .[release]
+
+      - name: publish release
+        run: |
+          if semantic-release print-version --next 2>&1 | grep -q "No release will be made."; then
+            echo "No semantic commit messages found, forcing minor version update"
+            semantic-release publish --minor -v DEBUG -D branch=main
+          else
+            echo "Found semantic commit message, generating new major/minor/patch version using this"
+            semantic-release publish -v DEBUG -D branch=main
+          fi
 {% endraw %}

@@ -1,4 +1,5 @@
 """Sample click app"""
+
 import click
 
 

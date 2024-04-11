@@ -1,3 +1,5 @@
+"""Sample test for click app"""
+
 from click.testing import CliRunner
 
 from {{cookiecutter.underscored}}.cli import cli

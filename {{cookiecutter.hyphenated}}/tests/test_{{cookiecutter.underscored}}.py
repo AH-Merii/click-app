@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from {{ cookiecutter.underscored }}.cli import cli
+from {{cookiecutter.underscored}}.cli import cli
 
 
 def test_version():

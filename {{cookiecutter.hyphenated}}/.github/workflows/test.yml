@@ -79,12 +79,6 @@ jobs:
         run: pip install .[release]
 
       - name: publish release
-        run: |
-          if semantic-release print-version --next 2>&1 | grep -q "No release will be made."; then
-            echo "No semantic commit messages found, forcing minor version update"
-            semantic-release publish --minor -v DEBUG -D branch=main
-          else
-            echo "Found semantic commit message, generating new major/minor/patch version using this"
-            semantic-release publish -v DEBUG -D branch=main
-          fi
+        run: semantic-release publish
+
 {% endraw %}

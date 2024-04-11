@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=69", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "{{ cookiecutter.hyphenated }}"
 dynamic = ["version"]
@@ -25,21 +29,21 @@ CI = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.hyph
 [project.optional-dependencies]
 test = ["isort", "black", "flake8", "pylint", "pytest", "pytest-cov"]
 dev = ["pip-tools"]
-release = ["python-semantic-release==9.4.0", "build"]
+release = ["python-semantic-release==9.4.0", "build", "setuptools-scm[toml]"]
 
 [tool.setuptools]
 packages = ["{{ cookiecutter.underscored }}"]
 
 [tool.setuptools_scm]
+local_scheme = "no-local-version"
 version_file = "{{ cookiecutter.underscored }}/_version.py"
-version_scheme = "no-guess-dev"
 
 [tool.semantic_release]
 version_variable = ["{{ cookiecutter.underscored }}/_version.py"]
-version_source = "tag"
 upload_to_pypi = false
 patch_without_tag = true
 major_on_zero = true
+minor_on_no_changes = true
 branch = "main"
 
 [tool.flake8]
@@ -51,5 +55,6 @@ message.disable = "C0103,R0902,R0913,E1102"
 format.max-line-length = 120
 
 [tool.black]
+exclude = "{{ cookiecutter.underscored }}/_version.py"
 line-length = 120
 

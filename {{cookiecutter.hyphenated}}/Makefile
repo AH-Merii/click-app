@@ -44,7 +44,7 @@ test-flake8:	## Check flake8 formatting, fails if not
 
 .PHONY: test-pylint
 test-pylint:	## Check pylint is OK or fails
-	pylint src
+	pylint {{ cookiecutter.underscored }} 
 
 .PHONY: test-pytest
 test-pytest:	## Run tests with pytest

@@ -35,6 +35,7 @@ release = ["python-semantic-release==9.4.0", "build", "setuptools-scm[toml]"]
 packages = ["{{ cookiecutter.underscored }}"]
 
 [tool.setuptools_scm]
+fallback_version = "0.0.1"
 local_scheme = "no-local-version"
 version_file = "{{ cookiecutter.underscored }}/_version.py"
 

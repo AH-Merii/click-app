@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # configure ssh key with github for use in 'publish release' step
+          # configure PAT with github for use in 'publish release' step
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
 
       - name: Set up Python
@@ -76,6 +76,16 @@ jobs:
       - name: Setup dependencies for doing a release
         run: pip install .[release]
 
-      - name: publish release
-        run: semantic-release publish
+      - name: Publish release
+        env: 
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
+        run: |
+          if semantic-release version --print 2>&1 | grep -q -e "No release found" -e "No release will be made"; then
+            echo "No semantic commits found, forcing initial minor version release"
+            semantic-release version --minor --commit --tag --changelog --vcs-release
+          else
+            echo "Found semantic commits, generating new major/minor/patch version based on commit messages"
+            semantic-release version --commit --tag --changelog --vcs-release
+          fi
+
 {% endraw %}

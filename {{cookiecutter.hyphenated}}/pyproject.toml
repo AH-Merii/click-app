@@ -27,7 +27,7 @@ CI = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.hyph
 {{ cookiecutter.hyphenated }} = "{{ cookiecutter.underscored }}.cli:cli"
 
 [project.optional-dependencies]
-test = ["isort", "black", "flake8", "pylint", "pytest", "pytest-cov"]
+test = ["isort", "black", "flake8", "ruff", "pytest", "pytest-cov"]
 dev = ["pip-tools"]
 release = ["python-semantic-release==9.4.0", "build", "setuptools-scm[toml]"]
 
@@ -50,9 +50,8 @@ branch = "main"
 max-line-length = 120
 exclude = [".venv"]
 
-[tool.pylint]
-message.disable = "C0103,R0902,R0913,E1102"
-format.max-line-length = 120
+[tool.ruff]
+line-length = 120
 
 [tool.black]
 exclude = "{{ cookiecutter.underscored }}/_version.py"

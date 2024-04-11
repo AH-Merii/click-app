@@ -13,7 +13,6 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          lfs: true
           python-version: "3.12"
           cache: "pip"
 
@@ -30,10 +29,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: "pip"
@@ -53,8 +52,8 @@ jobs:
       - name: Test that flake8 linter is passing, fails if not
         run: make test-flake8
 
-      - name: Test that pylint linter is passing, fails if not
-        run: make test-pylint
+      - name: Test that ruff linter is passing, fails if not
+        run: make test-ruff
 
   release:
     needs: [test-pytest, test-formatting-linting]
@@ -67,7 +66,6 @@ jobs:
           fetch-depth: 0
           # configure ssh key with github for use in 'publish release' step
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
-          lfs: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -80,5 +78,4 @@ jobs:
 
       - name: publish release
         run: semantic-release publish
-
 {% endraw %}

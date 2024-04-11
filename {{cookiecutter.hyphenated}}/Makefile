@@ -28,7 +28,7 @@ test-all: test-formatting-linting test-pytest
 
 .PHONY: test-formatting-linting
 test-formatting-linting: 	## Run all the formating/linting
-test-formatting-linting: test-isort test-black test-flake8 test-pylint
+test-formatting-linting: test-isort test-black test-flake8 test-ruff
 
 .PHONY: test-isort
 test-isort:	## Check that all files have their import statements correctly formatted, fails if not
@@ -42,9 +42,9 @@ test-black:	## Check that Black formatting is correct, fails if not
 test-flake8:	## Check flake8 formatting, fails if not
 	flake8
 
-.PHONY: test-pylint
-test-pylint:	## Check pylint is OK or fails
-	pylint {{ cookiecutter.underscored }} 
+.PHONY: test-ruff
+test-ruff:	## Check ruff is OK or fails
+	ruff check {{ cookiecutter.underscored }} 
 
 .PHONY: test-pytest
 test-pytest:	## Run tests with pytest

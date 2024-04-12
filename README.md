@@ -1,6 +1,6 @@
 # click-app cookiecutter template
 
-Cookiecutter template for creating new [Click](https://click.palletsprojects.com/) command-line tools. This template has out of the box support for automatic semantic versioning using [setuptools-scm](https://setuptools-scm.readthedocs.io/) and [python-semantic-release](https://python-semantic-release.readthedocs.io/en/latest/).
+Cookiecutter template for creating new [Click](https://click.palletsprojects.com/) command-line tools. This template has out of the box support for automatic semantic versioning using [setuptools-scm](https://setuptools-scm.readthedocs.io/) and [python-semantic-release](https://python-semantic-release.readthedocs.io/en/latest/). This repo builds on the original [click-app-template](https://github.com/simonw/click-app) by [Simon Willison](https://github.com/simonw).
 
 Use this template on your own machine with cookiecutter, or create a brand new repository based on this template entirely through the GitHub web interface using [click-app-template-repository](https://github.com/AH-Merii/click-app-template-repository).
 
@@ -49,7 +49,7 @@ If your tool is called `my-new-tool`, you can start working on it like so:
 
 You should see the following:
 
-    my-new-tool, version 0.1
+    my-new-tool, version 0.0.1
 
 You can run the default test for your tool like so:
 

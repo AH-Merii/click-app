@@ -17,18 +17,18 @@ Regular `pip` will work OK too.
 Run `cookiecutter gh:AH-Merii/click-app` and then answer the prompts. Here's an example run:
 
     $ cookiecutter gh:AH-Merii/click-app
-    app_name []: click app template demo
+    app_name []: click app template demo auto
     description []: Demonstrating https://github.com/AH-Merii/click-app
-    hyphenated [click-app-template-demo]: 
+    hyphenated [click-app-template-demo-auto]: 
     underscored [click_app_template_demo]: 
     github_username []: AH-Merii
     author_name []: AbdulHamid Merii
 
 I strongly recommend accepting the suggested value for "hyphenated" and "underscored" by hitting enter on those prompts.
 
-This will create a directory called `click-app-template-demo` - the tool name you enter is converted to lowercase and uses hyphens instead of spaces.
+This will create a directory called `click-app-template-demo-auto` - the tool name you enter is converted to lowercase and uses hyphens instead of spaces.
 
-See https://github.com/AH-Merii/click-app-template-demo for the output of this example.
+See https://github.com/AH-Merii/click-app-template-demo-auto for the output of this example.
 
 ## Developing your command-line tool
 

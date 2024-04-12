@@ -13,11 +13,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         path: main
-    - name: Checkout click-app-template-demo
+    - name: Checkout click-app-template-demo-auto
       uses: actions/checkout@v4
       with:
-        repository: AH-Merii/click-app-template-demo
-        path: click-app-template-demo-current
+        repository: AH-Merii/click-app-template-demo-auto
+        path: click-app-template-demo-auto-current
         token: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -30,15 +30,15 @@ jobs:
     - name: Build demo from template
       run: |-
         cat main/input-for-demo.txt | cookiecutter main
-        find click-app-template-demo
+        find click-app-template-demo-auto
     - name: Push to git
       env:
         PERSONAL_ACCESS_TOKEN_FOR_PUSH: ${{ secrets.PERSONAL_ACCESS_TOKEN_FOR_PUSH }}
       run: |-
         # Move the .git folder across
-        mv click-app-template-demo-current/.git click-app-template-demo
+        mv click-app-template-demo-auto-current/.git click-app-template-demo-auto
         # Commit and push the changes
-        cd click-app-template-demo
+        cd click-app-template-demo-auto
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
         git add -A .
@@ -46,11 +46,11 @@ jobs:
         git push -u origin main
     - name: Post commit comment
       run: |-
-        cd click-app-template-demo
+        cd click-app-template-demo-auto
         export FULL_SHA=$(git rev-parse HEAD)
         export SHORT_SHA=${FULL_SHA::8}
         export NEWLINE=$'\n'
-        echo '{}' | jq --arg v "Demo: https://github.com/AH-Merii/click-app-template-demo/tree/$SHORT_SHA" \
+        echo '{}' | jq --arg v "Demo: https://github.com/AH-Merii/click-app-template-demo-auto/tree/$SHORT_SHA" \
           '. + { body: $v }' | \
         curl -sL  -X POST -d @- \
           -H "Content-Type: application/json" \

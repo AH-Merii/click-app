@@ -1,4 +1,4 @@
-click app template demo
+click app template demo auto
 Demonstrating https://github.com/AH-Merii/click-app
 
 

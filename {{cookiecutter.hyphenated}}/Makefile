@@ -60,7 +60,7 @@ format:		## Applies isort and black formatting
 	black .
 
 help:		## Show this help.
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+	@grep -F -h "##" $(MAKEFILE_LIST) | grep -F -v grep -F | sed -e 's/\\$$//' | sed -e 's/##//'
 
 # Define a function that gets the current package version
 # Note: python must be set up with release dependencies installed first.
